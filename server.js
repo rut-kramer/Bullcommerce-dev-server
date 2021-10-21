@@ -38,7 +38,7 @@ app.all("/*", function (req, res, next) {
     }
 
 });
-const uri = process.env.DB_CONNECT2;
+const uri = process.env.ATLAS_URI_X;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
     (err) => { if (err) console.log(JSON.stringify(err)) });
 
@@ -62,44 +62,47 @@ app.use('/api', router);
 
 
 
-app.use('/:userName/isPermission', userController.checkPermission, async (req, res) => {
+app.use('/:userName/isPermission', async (req, res) => {
+    // app.use('/:userName/isPermission', userController.checkPermission, async (req, res) => {
     console.log("isPermission????");
     console.log("userName", req.params.userName);
     User.findOne({ username: req.params.userName }).then((currentUser) => {
         console.log("currentUser", currentUser)
 
-        if (!currentUser) {
-            let newUser = new User();
-
-            const jwt = req.cookies && req.cookies.jwt ? req.cookies.jwt : req.headers['authorization'] ? req.headers['authorization'] : null
-            const cookie = request.cookie(`jwt=${jwt}`)
-            console.log("jwt", jwt, "cookie", cookie);
-            let urlRoute
-
-            const options = {
-                method: "GET",
-                url: `https://dev.accounts.codes/api/${req.params.userName}`,
-                headers: { Cookie: cookie }
-            };
-            request(options, async (error, response, body) => {
-                console.log("response.statusCode", response.statusCode)
-               if (error || response.statusCode != 200) {
-                    return res.status(401).json({ des: req.get('host'), routes: urlRoute, status: 401 })
-                }
-                else {
-                    console.log("userName", req.params.userName)
-                    newUser.username = req.params.userName;
-                    // newUser.email = body.user.email
-                    newUser.email = JSON.parse(body).user.email
-                    await newUser.save();
-                    res.status(200).json(newUser);
-
-                }
-
-            });
-        }
+        if (!currentUser)
+            res.status(401).send()
         else
             res.status(200).json(currentUser)
+
+        //     let newUser = new User();
+
+        //     const jwt = req.cookies && req.cookies.jwt ? req.cookies.jwt : req.headers['authorization'] ? req.headers['authorization'] : null
+        //     const cookie = request.cookie(`jwt=${jwt}`)
+        //     console.log("jwt", jwt, "cookie", cookie);
+        //     let urlRoute
+
+        //     const options = {
+        //         method: "GET",
+        //         url: `https://dev.accounts.codes/api/${req.params.userName}`,
+        //         headers: { Cookie: cookie }
+        //     };
+        //     request(options, async (error, response, body) => {
+        //         console.log("response.statusCode", response.statusCode)
+        //        if (error || response.statusCode != 200) {
+        //             return res.status(401).json({ des: req.get('host'), routes: urlRoute, status: 401 })
+        //         }
+        //         else {
+        //             console.log("userName", req.params.userName)
+        //             newUser.username = req.params.userName;
+        //             // newUser.email = body.user.email
+        //             newUser.email = JSON.parse(body).user.email
+        //             await newUser.save();
+        //             res.status(200).json(newUser);
+
+        //         }
+
+        //     });
+        // }
 
     })
 });
@@ -123,6 +126,6 @@ function show(req, res, next) {
 // app.set('views', path.join(__dirname, 'views'))
 
 
-app.listen(3000, () => {
-    console.log(`!!Server is running on port 3000`);
+app.listen(5000, () => {
+    console.log(`!!Server is running on port 5000`);
 });

@@ -4,6 +4,8 @@ var Category = require('../models/category.model');
 var mongoose = require('mongoose');
 const request = require('request');
 
+
+
 const getAllUsers = (req, res) => {
     User.find()
         .then(users => res.json(users))
@@ -16,6 +18,48 @@ const getUserByEmail = (req, res) => {
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 }
+
+const getUserByEmailAndPassword = (req, res) => {
+    User.find({ "email": req.params.email, "password": req.params.password })
+        .populate("stores")
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+}
+
+const newUser = async (req, res) => {
+
+    const { username, password, email } = req.body;
+   let uu= User.find({ "email": req.params.email })
+console.log("iiiiii",uu);
+if (uu==undefined) {
+    const newsUser = new User({
+        username: username,
+        password: password,
+        email: email
+    })
+    newUser.save().then(n => {
+        console.log("News user created", n);
+
+        res.status(200).json({
+            _id: n._id,
+            username: n.userName,
+            password: n.password,
+            email: n.email,
+            
+        })
+    }
+    ).catch((error) => {
+        console.error("cant create new user", error);
+        res.status(400).json(error)
+
+    })
+    
+} else {
+    console.log("user alredy exists");
+    res.status(400).json("user alredy exists")
+}
+}
+
 
 const getUserByUid = async (req, res) => {
     await User.findOne({ "uid": req.params.uid }, function (err, result) {
@@ -94,7 +138,7 @@ const checkPermission = async (req, res, next) => {
     //בפונ הזו אמור לבדוק אם השם משתמש והגדט תואמים לאקאונטס
     const host = req.get('host');
     const isLocal = (req.query.isLocal == 'true');
-    console.log("IsLocal?", isLocal,"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    console.log("IsLocal?", isLocal, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
     if (isLocal)
         return next();
     console.log("in checkPermission", req.originalUrl.split("/"));
@@ -145,6 +189,8 @@ const checkPermission = async (req, res, next) => {
 module.exports = {
     getAllUsers,
     getUserByEmail,
+    getUserByEmailAndPassword,
+    newUser,
     getUserByUid,
     getStoresOfUser,
     editUser,
