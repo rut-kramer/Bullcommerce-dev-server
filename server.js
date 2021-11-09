@@ -8,6 +8,9 @@ require('dotenv').config();
 const userController = require('./controllers/user');
 var User = require('./models/user.model');
 const request = require("request");
+const multer = require('multer');
+const upload = multer({dest: __dirname + '/uploads/images'});
+
 
 const app = express();
 //app.use(cors());
@@ -62,11 +65,11 @@ app.use('/api', router);
 
 
 
-app.use('/:userName/isPermission', async (req, res) => {
-    // app.use('/:userName/isPermission', userController.checkPermission, async (req, res) => {
+app.use('/:email/isPermission', async (req, res) => {
+    // app.use('/:email/isPermission', userController.checkPermission, async (req, res) => {
     console.log("isPermission????");
-    console.log("userName", req.params.userName);
-    User.findOne({ username: req.params.userName }).then((currentUser) => {
+    console.log("email", req.params.email);
+    User.findOne({ email: req.params.email }).then((currentUser) => {
         console.log("currentUser", currentUser)
 
         if (!currentUser)

@@ -79,7 +79,7 @@ const newStore = async (req, res) => {
                         await u.save();
                         var newCategoryId = ""; var options9 = "";
                         const options10 = {
-                                url: 'https://bullcommerce.shop/api/attributes/newAttribute',
+                                url: 'http://localhost:5000/api/attributes/newAttribute',
                                 method: 'POST',
                                 headers: { Authorization: "view" },
                                 json: {
@@ -111,7 +111,7 @@ const newStore = async (req, res) => {
                                 else {
                                         console.log("colorAttribute", colorAttribute)
                                         options11 = {
-                                                url: 'https://bullcommerce.shop/api/attributes/newAttribute',
+                                                url: 'http://localhost:5000/api/attributes/newAttribute',
                                                 method: 'POST',
                                                 headers: { Authorization: "view" },
                                                 json: {
@@ -144,7 +144,7 @@ const newStore = async (req, res) => {
                                                 else {
                                                         console.log("materialAttribute", materialAttribute)
                                                         const options = {
-                                                                url: 'https://bullcommerce.shop/api/categories/newCategoty',
+                                                                url: 'http://localhost:5000/api/categories/newCategoty',
                                                                 method: 'POST',
                                                                 headers: { Authorization: "view" },
                                                                 json: {
@@ -162,7 +162,7 @@ const newStore = async (req, res) => {
                                                                 else {
                                                                         newCategoryId = body._id
                                                                         options9 = {
-                                                                                url: 'https://bullcommerce.shop/api/products/newProduct',
+                                                                                url: 'http://localhost:5000/api/products/newProduct',
                                                                                 method: 'POST',
                                                                                 headers: { Authorization: "view" },
                                                                                 json: {
@@ -197,7 +197,7 @@ const newStore = async (req, res) => {
                                                                 }
                                                         })
                                                         const options1 = {
-                                                                url: 'https://bullcommerce.shop/api/categories/newCategoty',
+                                                                url: 'http://localhost:5000/api/categories/newCategoty',
                                                                 method: 'POST',
                                                                 headers: { Authorization: "view" },
                                                                 json: {
@@ -215,7 +215,7 @@ const newStore = async (req, res) => {
                                                                 else {
                                                                         newCategoryId = body._id
                                                                         options9 = {
-                                                                                url: 'https://bullcommerce.shop/api/products/newProduct',
+                                                                                url: 'http://localhost:5000/api/products/newProduct',
                                                                                 method: 'POST',
                                                                                 headers: { Authorization: "view" },
                                                                                 json: {
@@ -252,7 +252,7 @@ const newStore = async (req, res) => {
                                                                 }
                                                         })
                                                         const options2 = {
-                                                                url: 'https://bullcommerce.shop/api/categories/newCategoty',
+                                                                url: 'http://localhost:5000/api/categories/newCategoty',
                                                                 method: 'POST',
                                                                 headers: { Authorization: "view" },
                                                                 json: {
@@ -270,7 +270,7 @@ const newStore = async (req, res) => {
                                                                 else {
                                                                         newCategoryId = body._id
                                                                         const options9 = {
-                                                                                url: 'https://bullcommerce.shop/api/products/newProduct',
+                                                                                url: 'http://localhost:5000/api/products/newProduct',
                                                                                 method: 'POST',
                                                                                 headers: { Authorization: "view" },
                                                                                 json: {
@@ -313,7 +313,7 @@ const newStore = async (req, res) => {
                                 }
                         });
                         const options123 = {
-                                url: 'https://bullcommerce.shop/api/designs/newStoreNavbarDesign/',
+                                url: 'http://localhost:5000/api/designs/newStoreNavbarDesign/',
                                 method: 'POST',
                                 headers: { Authorization: "view" },
                                 json: {
@@ -331,7 +331,7 @@ const newStore = async (req, res) => {
                                 }
                         });
                         const options122 = {
-                                url: 'https://bullcommerce.shop/api/designs/newStoreNewsletterDesign/',
+                                url: 'http://localhost:5000/api/designs/newStoreNewsletterDesign/',
                                 method: 'POST',
                                 headers: { Authorization: "view" },
                                 json: {

@@ -64,7 +64,7 @@ const newCategory = async (req, res) => {
 
                 let cd;
                 const options1 = {
-                        url: 'https://bullcommerce.shop/api/designs/newCategoryDesign/',
+                        url: 'http://localhost:5000/api/designs/newCategoryDesign/',
                         method: 'POST',
                         headers: { Authorization: "view" },
                         json: {

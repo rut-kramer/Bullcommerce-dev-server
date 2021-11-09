@@ -82,7 +82,7 @@ router.post('/papers/editPaper/:id', paperController.editPaper);
 router.get('/users', userController.getAllUsers);
 router.get('/users/:email', userController.getUserByEmail);
 router.get('/userByEmailAndPassword/:email/:password', userController.getUserByEmailAndPassword);
-router.post('/newUser/', userController.newUser);
+router.post('/newUser', userController.newUser);
 router.get('/userByUid/:uid', userController.getUserByUid)
 router.get('/users/getAllStores/:userId', userController.getStoresOfUser);
 router.get('/users/latestStoreOfUser/:userId', userController.latestStoreOfUser);

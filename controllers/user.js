@@ -19,45 +19,54 @@ const getUserByEmail = (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 }
 
+// const getUserByEmailAndPassword = (req, res) => {
+//     User.find({ "email": req.params.email, "password": req.params.password })
+//         .populate("stores")
+//         .then(user => res.json(user))
+//         .catch(err => res.status(400).json('Error: ' + err));
+// }
 const getUserByEmailAndPassword = (req, res) => {
-    User.find({ "email": req.params.email, "password": req.params.password })
+    User.findOne({ "email": req.params.email, "password": req.params.password })
         .populate("stores")
-        .then(user => res.json(user))
+        .then(user => {
+            if (user == null) {
+                res.status(400).send("The user is not exist, please registrate")
+            }
+            else {
+                res.json(user)
+            }
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 }
-
 const newUser = async (req, res) => {
+    const { userName, password, email } = req.body;
+    console.log("ggggggg", userName)
+    User.findOne({ "email": email }).then(u => {
 
-    const { username, password, email } = req.body;
-   let uu= User.find({ "email": req.params.email })
-console.log("iiiiii",uu);
-if (uu==undefined) {
-    const newsUser = new User({
-        username: username,
-        password: password,
-        email: email
-    })
-    newUser.save().then(n => {
-        console.log("News user created", n);
+        console.log("iiiiii", u);
+        if (u == null) {
 
-        res.status(200).json({
-            _id: n._id,
-            username: n.userName,
-            password: n.password,
-            email: n.email,
-            
-        })
-    }
-    ).catch((error) => {
-        console.error("cant create new user", error);
-        res.status(400).json(error)
-
-    })
-    
-} else {
-    console.log("user alredy exists");
-    res.status(400).json("user alredy exists")
-}
+            const newUser = new User({
+                username: userName,
+                password: password,
+                email: email
+            })
+            console.log("New - user", newUser)
+            newUser.save().then(n => {
+                console.log("News user created", n);
+                res.status(200).send(newUser)
+            }
+            ).catch((error) => {
+                console.error("cant create new user", error);
+                res.status(400).json(error)
+            })
+        } else {
+            console.log("user alredy exists");
+            res.status(400).send("user alredy exists")
+        }
+    }).catch(
+        err => res.status(400).json('Error: ' + err)
+    )
 }
 
 
